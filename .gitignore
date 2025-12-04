@@ -1,0 +1,31 @@
+# --- PYTHON (Visión Artificial) ---
+__pycache__/
+*.py[cod]
+*$py.class
+# Entornos virtuales (si usas venv)
+venv/
+env/
+.env
+
+# --- PLATFORMIO (ESP32) ---
+# Esta es la carpeta más importante de ignorar, pesa mucho y son temporales
+.pio/
+.pioenvs/
+.piolibdeps/
+*.bin
+*.elf
+
+# --- ARDUINO IDE ---
+# Archivos temporales de compilación de Arduino
+build/
+output/
+
+# --- VS CODE ---
+# Configuraciones locales que no deben compartirse (paths absolutos, etc.)
+.vscode/
+*.code-workspace
+
+# --- SISTEMA OPERATIVO ---
+# Archivos basura de Mac y Windows
+.DS_Store
+Thumbs.db
