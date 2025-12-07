@@ -45,6 +45,12 @@ void setup() {
   IPAddress localIP = WiFi.softAPIP();
 }
 
+void moverOrejas(int grados){
+  motorDer.write(grados);
+  motorIzq.write(180 - grados);
+  delay(1000);
+}
+
 void loop() {
   // put your main code here, to run repeatedly:
 
@@ -62,14 +68,17 @@ void loop() {
     // Casos de emocion para los motores
     switch (emocion)
     {
-    case '0':
-      /* code */
+    case '0': //Neutral
+      moverOrejas(90);
       break;
-    case '1':
+    case '1': // Felicidad
+      moverOrejas(153);
       break;
-    case '2': 
+    case '2': // Asombro
+      moverOrejas(45);
       break;
-    case '3':
+    case '3': //Enojo
+    moverOrejas(15);
       break;
     }
   }
