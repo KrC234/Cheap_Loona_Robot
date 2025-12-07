@@ -66,7 +66,63 @@ void loop() {
     emocionDetec = Serial.read();
 
     switch(emocionDetec){
+      // Neutral
+      case '0':
+        dibujaNeutro();
+      break;
+
+      // Felicidad 
+      case '1':
+        dibujaFeliz();
+      break;
       
+      // Asombro
+      case '2':
+        dibujaCuriosidad();
+      break;
+      
+      // Enojo
+      case '3':
+        dibujaTristeza();
+      break;
     }
   }
+}
+
+void dibujaNeutro(){
+  tft.fillScreen(NEGRO);
+
+  // Ojos
+  centrarElipseHueca(80,120,60,100,BLANCO);
+  centrarElipseHueca(240,120,60,100,BLANCO);
+
+  // Boca 
+  centrarElipseHueca(160,140,40,60,BLANCO);
+  centrarRectangulo(160,120,40,40,NEGRO);
+}
+
+void dibujaFeliz(){
+  tft.fillScreen(NEGRO);
+
+  // Ojos
+  centrarElipseHueca(80,120,60,100,AMARILLO);
+  centrarElipseHueca(240,120,60,100,AMARILLO);
+
+  centrarElipseHueca(80,160,60,100,AMARILLO);
+  centrarElipseHueca(240,160,60,100,AMARILLO);
+
+  centrarRectangulo(80,194,60,100,NEGRO);
+  centrarRectangulo(240,194,60,100,NEGRO);
+
+  // Boca
+  centrarElipseRellena(160,160,100,60,AMARILLO);
+   centrarElipseRellena(160,140,100,60,NEGRO);
+}
+
+void dibujaCuriosidad(){
+
+}
+
+void dibujaTristeza(){
+
 }
