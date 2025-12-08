@@ -89,7 +89,7 @@ void loop() {
         case '3':
           dibujaTristeza();
         break;
-    }
+      }
     }
     
   }

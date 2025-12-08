@@ -24,6 +24,10 @@ unsigned int localPort = 8080;
 // Bus de paquetes 
 char packetBuffer[255];
 
+// Variables de detección 
+char emocionDetec = ' ';
+char ultimaEmocion = '0';
+
 void setup() {
   Serial.begin(115200);
   
@@ -61,25 +65,31 @@ void loop() {
     
     if(len > 0) packetBuffer[len] = 0;
 
-    char emocion = packetBuffer[0];
+    emocionDetec = packetBuffer[0];
 
-    Serial2.write(emocion);
-    
-    // Casos de emocion para los motores
-    switch (emocion)
-    {
-    case '0': //Neutral
-      moverOrejas(90);
-      break;
-    case '1': // Felicidad
-      moverOrejas(153);
-      break;
-    case '2': // Asombro
-      moverOrejas(45);
-      break;
-    case '3': //Enojo
-    moverOrejas(15);
-      break;
+    if(emocionDetec != ultimaEmocion){
+      Serial2.write(emocionDetec);
+      switch (emocionDetec)
+      {
+      case '0':
+        /* code */
+        moverOrejas(90);
+        break;
+      
+      case '1':
+        moverOrejas(153);
+        break;
+
+      case '2':
+        moverOrejas(45);
+        break;
+
+      case '3':
+        moverOrejas(15);
+        break;
+      }
+
+      ultimaEmocion = emocionDetec;
     }
   }
 }
