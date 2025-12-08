@@ -28,6 +28,7 @@ void setup() {
   tft.setRotation(1);
 
   tft.fillScreen(NEGRO);
+  ultimaEmocion = '0';
 }
 
 /*
@@ -61,34 +62,42 @@ void centrarRectangulo(int cx, int cy, int w, int h, uint16_t color){
   tft.fillRect(x,y,w,h,color);
 }
 
+// Flujo Principal
 void loop() {
   if(Serial.available() > 0){
     emocionDetec = Serial.read();
 
-    switch(emocionDetec){
-      // Neutral
-      case '0':
-        dibujaNeutro();
-      break;
+    // Detecta si la emoción a cambiado y si tiene un formato válido 
+    if(emocionDetec != ultimaEmocion && emocionDetec !='\n' && emocionDetec != '\r'){
+      switch(emocionDetec){
+        // Neutral
+        case '0':
+          dibujaNeutro();
+        break;
 
-      // Felicidad 
-      case '1':
-        dibujaFeliz();
-      break;
+        // Felicidad 
+        case '1':
+          dibujaFeliz();
+        break;
       
-      // Asombro
-      case '2':
-        dibujaCuriosidad();
-      break;
+        // Asombro
+        case '2':
+          dibujaCuriosidad();
+        break;
       
-      // Enojo
-      case '3':
-        dibujaTristeza();
-      break;
+        // Enojo
+        case '3':
+          dibujaTristeza();
+        break;
     }
+    }
+    
   }
 }
 
+/*
+  Dibujas rostros con diferentes formas y colores
+*/
 void dibujaNeutro(){
   tft.fillScreen(NEGRO);
 
@@ -120,9 +129,38 @@ void dibujaFeliz(){
 }
 
 void dibujaCuriosidad(){
+  tft.fillScreen(NEGRO);
+
+  // Cejas
+  centrarElipseHueca(80,100,64,100,VERDE);
+  centrarElipseHueca(240,80,64,100,VERDE);
+  centrarRectangulo(80,120,64,100,NEGRO);
+  centrarRectangulo(240,120,64,100,NEGRO);
+
+  // Ojos
+  centrarElipseHueca(80,120,60,100,VERDE);
+  centrarElipseHueca(240,120,60,100,VERDE);
+
+  // Boca
+  centrarElipseRellena(160,150,60,70,VERDE);
+  centrarElipseRellena(158,156,60,70,NEGRO);
+  centrarRectangulo(160,180,60,60,NEGRO);
 
 }
 
 void dibujaTristeza(){
+  tft.fillScreen(NEGRO);
+  // Ojos
+  centrarElipseHueca(80,120,60,100,AZUL);
+  centrarElipseHueca(240,120,60,100,AZUL);
 
+  centrarElipseHueca(80,80,60,80,AZUL);
+  centrarElipseHueca(240,80,60,80,AZUL);
+
+  centrarRectangulo(80,65,60,60,NEGRO);
+  centrarRectangulo(240,65,60,60,NEGRO);
+
+  // Boca
+  centrarElipseRellena(160,180,60,100,AZUL);
+  centrarElipseRellena(160,200,60,100,NEGRO);
 }
