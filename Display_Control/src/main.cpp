@@ -5,7 +5,6 @@ MCUFRIEND_kbv tft;
 
 // Variables globales
 char emocionDetec = ' ';
-char ultimaEmocion =' ';
 
 // --- Definición de Colores ---
 #define NEGRO   0x0000
@@ -15,11 +14,14 @@ char ultimaEmocion =' ';
 #define AMARILLO 0xFFE0
 #define BLANCO  0xFFFF
 
+void dibujaNeutro();
+void dibujaFeliz();
+void dibujaCuriosidad();
+void dibujaTristeza();
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  ultimaEmocion = '0';
 
   // Inicialización de la pantalla 
   uint16_t ID = tft.readID();
@@ -28,7 +30,8 @@ void setup() {
   tft.setRotation(1);
 
   tft.fillScreen(NEGRO);
-  ultimaEmocion = '0';
+
+  dibujaNeutro();
 }
 
 /*
@@ -68,7 +71,7 @@ void loop() {
     emocionDetec = Serial.read();
 
     // Detecta si la emoción a cambiado y si tiene un formato válido 
-    if(emocionDetec != ultimaEmocion && emocionDetec !='\n' && emocionDetec != '\r'){
+    if(emocionDetec !='\n' && emocionDetec != '\r'){
       switch(emocionDetec){
         // Neutral
         case '0':

@@ -13,6 +13,29 @@
 Servo motorDer;
 Servo motorIzq;
 
+// Motor A
+const int ENA = 25;  
+const int IN1 = 26;
+const int IN2 = 27;
+
+// Motor B
+const int ENB = 33;  
+const int IN3 = 14;
+const int IN4 = 12;
+
+// --- Configuración PWM (LEDC) ---
+const int freq = 5000;
+const int canalA = 12;
+const int canalB = 13;
+const int resolucion = 8;
+
+// --- DICCIONARIO ---
+const int MOTOR_A = 0;
+const int MOTOR_B = 1;
+const int ADELANTE = 1;
+const int ATRAS = -1;
+const int PARAR = 0;
+
 // Punto de Acceso
 const char *ssid = "ProyectoRobotica";
 const char *password = "123456789";
@@ -26,7 +49,7 @@ char packetBuffer[255];
 
 // Variables de detección 
 char emocionDetec = ' ';
-char ultimaEmocion = '0';
+char ultimaEmocion = ' ';
 
 void setup() {
   Serial.begin(115200);
@@ -40,6 +63,21 @@ void setup() {
 
   motorDer.write(0);
   motorIzq.write(180);
+
+  // Configuración de Motores
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+
+  // Vincular pines PWM
+  ledcAttachPin(ENA, canalA);
+  ledcAttachPin(ENB, canalB);
+
+  // Configurar PWM
+  ledcSetup(canalA, freq, resolucion);
+  ledcSetup(canalB, freq, resolucion);
+
   // Creación punto de acceso
   WiFi.disconnect(true);
   WiFi.mode(WIFI_AP);
@@ -47,12 +85,39 @@ void setup() {
   WiFi.softAP(ssid,password);
 
   IPAddress localIP = WiFi.softAPIP();
+
+  udp.begin(localPort);
+
+  ultimaEmocion = '0';
 }
 
 void moverOrejas(int grados){
   motorDer.write(grados);
   motorIzq.write(180 - grados);
   delay(1000);
+}
+
+void moverMotor(int motorId, int direccion, int velocidad) {
+  velocidad = constrain(velocidad, 0, 255);
+  int pinIN1, pinIN2, canalPWM;
+
+  if (motorId == MOTOR_A) {
+    pinIN1 = IN1; pinIN2 = IN2; canalPWM = canalA;
+  } else {
+    pinIN1 = IN3; pinIN2 = 
+    IN4; canalPWM = canalB;
+  }
+
+  if (direccion == ADELANTE) {
+    digitalWrite(pinIN1, HIGH); digitalWrite(pinIN2, LOW);
+    ledcWrite(canalPWM, velocidad);
+  } else if (direccion == ATRAS) {
+    digitalWrite(pinIN1, LOW); digitalWrite(pinIN2, HIGH);
+    ledcWrite(canalPWM, velocidad);
+  } else {
+    digitalWrite(pinIN1, LOW); digitalWrite(pinIN2, LOW);
+    ledcWrite(canalPWM, 0);
+  }
 }
 
 void loop() {
@@ -88,7 +153,6 @@ void loop() {
         moverOrejas(15);
         break;
       }
-
       ultimaEmocion = emocionDetec;
     }
   }
