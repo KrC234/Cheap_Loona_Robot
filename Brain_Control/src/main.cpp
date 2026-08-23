@@ -61,8 +61,8 @@ void setup() {
   motorDer.attach(18);
   motorIzq.attach(19);
 
-  motorDer.write(0);
-  motorIzq.write(180);
+  // motorDer.write(0);
+  // motorIzq.write(180);
 
   // Configuración de Motores
   pinMode(IN1, OUTPUT);
@@ -94,7 +94,6 @@ void setup() {
 void moverOrejas(int grados){
   motorDer.write(grados);
   motorIzq.write(180 - grados);
-  delay(1000);
 }
 
 void moverMotor(int motorId, int direccion, int velocidad) {

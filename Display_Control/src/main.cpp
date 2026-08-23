@@ -72,27 +72,12 @@ void loop() {
 
     // Detecta si la emoción a cambiado y si tiene un formato válido 
     if(emocionDetec !='\n' && emocionDetec != '\r'){
-      switch(emocionDetec){
-        // Neutral
-        case '0':
-          dibujaNeutro();
-        break;
+      
+      
 
-        // Felicidad 
-        case '1':
-          dibujaFeliz();
-        break;
+
+
       
-        // Asombro
-        case '2':
-          dibujaCuriosidad();
-        break;
-      
-        // Enojo
-        case '3':
-          dibujaTristeza();
-        break;
-      }
     }
     
   }

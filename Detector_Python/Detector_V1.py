@@ -104,8 +104,8 @@ def procesar_y_enviar_emocion(nueva_emocion_detectada):
                 print('Emocion detectada sin red')
 
 # --- BUCLE PRINCIPAL ---
-url = "http://192.168.4.3:81/stream"
-cap = cv2.VideoCapture(0) 
+url = "http://192.168.4.2:80/stream"
+cap = cv2.VideoCapture(url) 
 if not cap.isOpened():
     print("No se pudo obtener la imagen")
     exit()

@@ -6,7 +6,7 @@ __pycache__/
 venv/
 env/
 .env
-
+Detector_Python/Detector_V1.py
 # --- PLATFORMIO (ESP32) ---
 # Esta es la carpeta más importante de ignorar, pesa mucho y son temporales
 .pio/
